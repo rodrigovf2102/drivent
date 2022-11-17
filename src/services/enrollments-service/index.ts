@@ -3,7 +3,8 @@ import { notFoundError } from "@/errors";
 import addressRepository, { CreateAddressParams } from "@/repositories/address-repository";
 import enrollmentRepository, { CreateEnrollmentParams } from "@/repositories/enrollment-repository";
 import { exclude } from "@/utils/prisma-utils";
-import { Address, Enrollment, AddressFromCep, AddressFromCepEntity } from "@prisma/client";
+import { Address, Enrollment } from "@prisma/client";
+import { AddressFromCep, AddressFromCepEntity} from "@/protocols.js";
 
 async function getAddressFromCEP(cep: string): Promise<AddressFromCep> {
   const result = await request.get(`https://viacep.com.br/ws/${cep}/json/`);
