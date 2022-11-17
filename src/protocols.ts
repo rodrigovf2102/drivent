@@ -18,3 +18,24 @@ export type RequestError = {
   name: string,
   message: string,
 };
+
+export type AddressFromCep = {
+  logradouro: string,
+  complemento: string ,
+  bairro: string,
+  cidade: string,
+  uf:string
+}
+
+export type AddressFromCepEntity = {
+  cep: string,
+  logradouro: string,
+  complemento: string ,
+  bairro: string,
+  localidade: string,
+  uf: string,
+  ibge: string,
+  gia: string,
+  ddd: string,
+  siafi: string
+}
