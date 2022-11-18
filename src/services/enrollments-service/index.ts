@@ -31,7 +31,7 @@ async function getOneWithAddressByUserId(userId: number): Promise<GetOneWithAddr
 
   if (!enrollmentWithAddress) throw notFoundError();
 
-  const [firstAddress] = enrollmentWithAddress.Address;
+  const firstAddress = enrollmentWithAddress.Address;
   const address = getFirstAddress(firstAddress);
 
   return {
