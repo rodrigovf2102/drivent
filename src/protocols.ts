@@ -9,7 +9,6 @@ export type ViaCEPAddress = {
   bairro: string,
   localidade: string,
   uf: string,
-
 };
 
 export type AddressEnrollment = {
@@ -19,7 +18,6 @@ export type AddressEnrollment = {
   cidade: string,
   uf: string,
   error?: string
-
 }
 
 export type RequestError = {
@@ -29,3 +27,24 @@ export type RequestError = {
   name: string,
   message: string,
 };
+
+export type AddressFromCep = {
+  logradouro: string,
+  complemento: string,
+  bairro: string,
+  cidade: string,
+  uf: string
+}
+
+export type AddressFromCepEntity = {
+  cep: string,
+  logradouro: string,
+  complemento: string,
+  bairro: string,
+  localidade: string,
+  uf: string,
+  ibge: string,
+  gia: string,
+  ddd: string,
+  siafi: string
+}
