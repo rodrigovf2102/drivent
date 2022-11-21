@@ -48,3 +48,26 @@ export type AddressFromCepEntity = {
   ddd: string,
   siafi: string
 }
+
+export type CardData = {
+  issuer: string,
+  number: string,
+  name: string,
+  expirationDate: Date,
+  cvv: string
+}
+
+export type PaymentPost = {
+  ticketId: number,
+  cardData: CardData
+}
+
+export type Payment = {
+  id: number
+  ticketId: number
+  value: number
+  cardIssuer: string
+  cardLastDigits: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}

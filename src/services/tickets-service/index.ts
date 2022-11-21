@@ -1,9 +1,6 @@
-import { request } from "@/utils/request";
 import { notFoundError } from "@/errors";
-import addressRepository, { CreateAddressParams } from "@/repositories/address-repository";
 import enrollmentRepository, { CreateEnrollmentParams } from "@/repositories/enrollment-repository";
-import { exclude } from "@/utils/prisma-utils";
-import { Enrollment, Prisma, Ticket, TicketType } from "@prisma/client";
+import { Enrollment, Ticket, TicketType } from "@prisma/client";
 import ticketsRepository from "@/repositories/tickets-repository";
 
 async function getTicketsTypes(): Promise<TicketType[]> {
@@ -15,7 +12,7 @@ async function getTicketsTypes(): Promise<TicketType[]> {
 async function getTicketByEnrollmentId(userId: number): Promise<Ticket> {
   const enrollment = await getEnrollmentByUserId(userId);
   const ticket = await ticketsRepository.findTicketByEnrollmentId(enrollment.id);
-  if (!ticket) {
+  if(!ticket) {
     throw notFoundError();
   }
   return ticket;
