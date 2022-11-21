@@ -1,4 +1,3 @@
-import { requestError } from "@/errors";
 import { AuthenticatedRequest } from "@/middlewares";
 import { PaymentPost } from "@/protocols";
 import paymentsService from "@/services/payments-service";

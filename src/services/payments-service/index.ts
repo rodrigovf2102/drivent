@@ -1,6 +1,6 @@
 import { invalidDataError, notFoundError } from "@/errors";
-import enrollmentRepository, { CreateEnrollmentParams } from "@/repositories/enrollment-repository";
-import { Enrollment, Payment, Prisma, Ticket, TicketStatus } from "@prisma/client";
+import enrollmentRepository from "@/repositories/enrollment-repository";
+import { Payment, Ticket } from "@prisma/client";
 import paymentRepository, { PaymentCreate } from "@/repositories/payment-repository";
 import ticketsRepository, { TicketId, TicketUpdateStatus } from "@/repositories/tickets-repository";
 import { PaymentPost } from "@/protocols";

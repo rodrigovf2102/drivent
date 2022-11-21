@@ -1,5 +1,5 @@
 import { notFoundError } from "@/errors";
-import enrollmentRepository, { CreateEnrollmentParams } from "@/repositories/enrollment-repository";
+import enrollmentRepository from "@/repositories/enrollment-repository";
 import { Enrollment, Ticket, TicketType } from "@prisma/client";
 import ticketsRepository from "@/repositories/tickets-repository";
 
