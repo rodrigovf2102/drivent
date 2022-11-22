@@ -10,6 +10,4 @@ paymentsRouter
   .get("/", getPayments)
   .post("/process", validateBody(createPaymentSchema), postPayment);
 
-//.post("/", validateBody(createTicketSchema), postTicket);
-
 export { paymentsRouter };
