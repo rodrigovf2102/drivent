@@ -40,7 +40,7 @@ async function updateStatusByTicketId(ticketId: TicketId, ticketStatus: TicketUp
 
 export type TicketUpdateStatus = Pick<Ticket, "status">
 export type TicketId = Pick<Ticket, "id">
-export type TicketCreate = Exclude<Ticket, "id">
+export type TicketCreate = Pick<Ticket, "ticketTypeId" | "enrollmentId" | "status" >
 
 const ticketsRepository = { findManyTicketsInfo, findTicketByEnrollmentId, findTicketTypeById,
   createNewTicket, findTicketById, updateStatusByTicketId };
