@@ -1,10 +1,7 @@
 import app, { init } from "@/app";
-import { prisma } from "@/config";
-import hotelRepository from "@/repositories/hotel-repository";
 import faker from "@faker-js/faker";
 import { Hotel } from "@prisma/client";
 import httpStatus from "http-status";
-import { options } from "joi";
 import * as jwt from "jsonwebtoken";
 import supertest from "supertest";
 import { createUser, createHotels } from "../factories";
@@ -50,51 +47,29 @@ describe("GET /hotels", () => {
       const token = await generateValidToken(user);
 
       const randomNumber = Number(faker.random.numeric(1, { bannedDigits: ["0", "1"] }));
-            await createHotels(randomNumber) as Hotel[];
-            const hotels = await hotelRepository.findAllHotels();
-            
-            const hotelsVerification: HotelsVerification[] = [];
-            for (const hotel of hotels) {
-              const hotelVerification: HotelsVerification = {
-                id: hotel.id,
-                name: hotel.name,
-                image: hotel.image,
-                createdAt: hotel.createdAt.toISOString(),
-                updatedAt: hotel.updatedAt.toISOString()
-              };
-              hotelsVerification.push(hotelVerification);
-            }
+      await createHotels(randomNumber);
 
-            const response = await server.get("/hotels").set("Authorization", `Bearer ${token}`);
+      const response = await server.get("/hotels").set("Authorization", `Bearer ${token}`);
 
-            expect(response.status).toEqual(httpStatus.OK);
-            expect(response.body).toEqual(hotelsVerification);
+      expect(response.status).toEqual(httpStatus.OK);
 
-      /*expect(response.body)
-              .toEqual(
-                expect.arrayContaining(
-                  [expect.objectContaining(
-                    {
-                      id: expect.any(Number),
-                      name: expect.any(String),
-                      image: expect.any(String),
-                      createdAt: expect.any(String),
-                      updatedAt: expect.any(String)
-                    })
-                  ]
-                )
-              );*/
+      expect(response.body)
+        .toEqual(
+          expect.arrayContaining(
+            [expect.objectContaining(
+              {
+                id: expect.any(Number),
+                name: expect.any(String),
+                image: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String)
+              })
+            ]
+          )
+        );
     });
   });
 });
-
-type HotelsVerification = {
-    id: number
-    name: string
-    image: string
-    createdAt: string
-    updatedAt: string
-}
 
 describe("GET /hotels/process/:hotelId", () => {
   it("should respond with status 401 if no token is given", async () => {
