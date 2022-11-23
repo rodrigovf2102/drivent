@@ -1,9 +1,8 @@
 import app, { init } from "@/app";
 import { prisma } from "@/config";
+import hotelRepository from "@/repositories/hotel-repository";
 import faker from "@faker-js/faker";
-import { Hotel, TicketStatus } from "@prisma/client";
-import { empty } from "@prisma/client/runtime";
-import exp from "constants";
+import { Hotel } from "@prisma/client";
 import httpStatus from "http-status";
 import * as jwt from "jsonwebtoken";
 import supertest from "supertest";
@@ -50,12 +49,13 @@ describe("GET /hotels", () => {
       const token = await generateValidToken(user);
 
             await createHotels(2) as Hotel[];
+            const hotels = await hotelRepository.findAllHotels();
 
             const response = await server.get("/hotels").set("Authorization", `Bearer ${token}`);
 
             expect(response.status).toEqual(httpStatus.OK);
 
-            expect(response.body)
+            /*expect(response.body)
               .toEqual(
                 expect.arrayContaining(
                   [expect.objectContaining(
@@ -68,23 +68,23 @@ describe("GET /hotels", () => {
                     })
                   ]
                 )
-              );
+              );*/
 
-      /*expect(response.body)
-                .toEqual([{
-                    id: hotels[0].id,
-                    name: hotels[0].name,
-                    image: hotels[0].image,
-                    createdAt: hotels[0].createdAt,
-                    updatedAt: hotels[0].updatedAt
-                }, {
-                    id: hotels[1].id,
-                    name: hotels[1].name,
-                    image: hotels[1].image,
-                    createdAt: hotels[1].createdAt,
-                    updatedAt: hotels[1].updatedAt
-                }]
-                );*/
+            expect(response.body)
+              .toEqual([{
+                id: hotels[0].id,
+                name: hotels[0].name,
+                image: hotels[0].image,
+                createdAt: hotels[0].createdAt.toISOString(),
+                updatedAt: hotels[0].updatedAt.toISOString()
+              }, {
+                id: hotels[1].id,
+                name: hotels[1].name,
+                image: hotels[1].image,
+                createdAt: hotels[1].createdAt.toISOString(),
+                updatedAt: hotels[1].updatedAt.toISOString()
+              }]
+              );
     });
   });
 });

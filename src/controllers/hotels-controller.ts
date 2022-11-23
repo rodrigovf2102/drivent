@@ -25,7 +25,6 @@ export async function getHotelById(req: AuthenticatedRequest, res: Response) {
     if(error.name==="NotFoundError") {
       return res.sendStatus(httpStatus.NOT_FOUND);
     }
-    console.log(error.message);
     return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 }
