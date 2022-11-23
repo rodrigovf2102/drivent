@@ -13,11 +13,11 @@ export async function getHotels(req: AuthenticatedRequest, res: Response) {
   }
 }
 
-export async function getHotelById(req: AuthenticatedRequest, res: Response) {
+export async function getHotelRoomsByHotelIdWithNoBookings(req: AuthenticatedRequest, res: Response) {
   try {
     const hotelId = Number(req.params.hotelId);
-    const hotel = await hotelServices.getHotelById(hotelId);
-    return res.status(httpStatus.OK).send(hotel);
+    const rooms = await hotelServices.getHotelRoomsByHotelIdWithNoBookings(hotelId);
+    return res.status(httpStatus.OK).send(rooms);
   } catch (error) {
     if(error.name==="InvalidDataError") {
       return res.sendStatus(httpStatus.BAD_REQUEST);
