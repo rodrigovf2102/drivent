@@ -1,70 +1,48 @@
 import { prisma } from "@/config";
-import { Ticket, TicketStatus } from "@prisma/client";
+import { Ticket } from "@prisma/client";
 
-async function findTicketTypes() {
+async function findManyTicketsInfo() {
   return prisma.ticketType.findMany();
-}
-
-async function findTickeyById(ticketId: number) {
-  return prisma.ticket.findFirst({
-    where: {
-      id: ticketId,
-    },
-    include: {
-      Enrollment: true,
-    }
-  });
-}
-async function findTickeWithTypeById(ticketId: number) {
-  return prisma.ticket.findFirst({
-    where: {
-      id: ticketId,
-    },
-    include: {
-      TicketType: true,
-    }
-  });
 }
 
 async function findTicketByEnrollmentId(enrollmentId: number) {
   return prisma.ticket.findFirst({
-    where: {
-      enrollmentId,
-    },
-    include: {
-      TicketType: true, //inner join
-    }
+    where: { enrollmentId: enrollmentId },
+    include: { TicketType: true }
   });
 }
 
-async function createTicket(ticket: CreateTicketParams) {
+async function findTicketTypeById(ticketTypeId: number) {
+  return prisma.ticketType.findFirst({
+    where: { id: ticketTypeId }
+  });
+}
+
+async function createNewTicket(data: TicketCreate) {
   return prisma.ticket.create({
-    data: {
-      ...ticket,
-    }
+    data,
+    include: { TicketType: true }
   });
 }
 
-async function ticketProcessPayment(ticketId: number) {
+async function findTicketById(id: number) {
+  return prisma.ticket.findFirst({
+    where: { id }
+  });
+}
+
+async function updateStatusByTicketId(ticketId: TicketId, ticketStatus: TicketUpdateStatus ) {
   return prisma.ticket.update({
-    where: {
-      id: ticketId,
-    },
-    data: {
-      status: TicketStatus.PAID,
-    }
+    where: ticketId,
+    data: ticketStatus
   });
 }
 
-export type CreateTicketParams = Omit<Ticket, "id" | "createdAt" | "updatedAt">
+export type TicketUpdateStatus = Pick<Ticket, "status">
+export type TicketId = Pick<Ticket, "id">
+export type TicketCreate = Pick<Ticket, "ticketTypeId" | "enrollmentId" | "status" >
 
-const ticketRepository = {
-  findTicketTypes,
-  findTicketByEnrollmentId,
-  createTicket,
-  findTickeyById,
-  findTickeWithTypeById,
-  ticketProcessPayment,
-};
+const ticketsRepository = { findManyTicketsInfo, findTicketByEnrollmentId, findTicketTypeById,
+  createNewTicket, findTicketById, updateStatusByTicketId };
 
-export default ticketRepository;
+export default ticketsRepository;

@@ -2,7 +2,7 @@ import { invalidDataError, notFoundError } from "@/errors";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import { Payment, Ticket } from "@prisma/client";
 import paymentRepository, { PaymentCreate } from "@/repositories/payment-repository";
-import ticketsRepository, { TicketId, TicketUpdateStatus } from "@/repositories/tickets-repository";
+import ticketsRepository, { TicketId, TicketUpdateStatus } from "@/repositories/ticket-repository";
 import { PaymentPost } from "@/protocols";
 
 async function getPaymentByUserIdTicketId(userId: number, ticketIdString: string): Promise<Payment> {
