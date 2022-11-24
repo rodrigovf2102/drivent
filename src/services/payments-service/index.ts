@@ -8,9 +8,6 @@ import { PaymentPost } from "@/protocols";
 async function getPaymentByUserIdTicketId(userId: number, ticketIdString: string): Promise<Payment> {
   const ticketId = Number(ticketIdString);
   const ticket = await getTicketById(ticketId);
-  if (!ticket) {
-    throw notFoundError();
-  }
   await checkEnrollmentId(userId, ticket.enrollmentId);
   const payment = await paymentRepository.findPaymentByTicketId(ticketId);
 
@@ -37,9 +34,12 @@ async function createPayment(userId: number, paymentInfo: PaymentPost): Promise<
 
 async function checkEnrollmentId(userId: number, enrollmentId: number) {
   const enrollment = await enrollmentRepository.findWithoutAddressByUserId(userId);
+  if(!enrollment) {
+    const error = ["User has no enrollment"];
+    throw invalidDataError(error);
+  }
   if (enrollmentId !== enrollment.id) {
-    const error = [];
-    error[0] = "User id is not associated with ticket";
+    const error = ["User id is not associated with ticket"];
     throw invalidDataError(error);
   }
 }
