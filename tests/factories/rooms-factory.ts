@@ -40,7 +40,7 @@ function setRoomsNames(floorsAmount: number, roomsPerFloor: number): Array<strin
     if(room>roomsPerFloor) {
       room=1;
     }
-    if(room<=10) {
+    if(room<10) {
       roomsNames.push(`${floor.toString()}0${room.toString()}`);
     } else {
       roomsNames.push(`${floor.toString()}${room.toString()}`);
