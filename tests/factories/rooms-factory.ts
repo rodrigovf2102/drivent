@@ -25,9 +25,7 @@ export async function createRooms(hotelId: number, floorsAmount: number, roomsPe
       data: rooms[0]
     });
   }
-  return prisma.room.findFirst({
-    where: { id: Number(faker.random.numeric(12)) }
-  });
+  return new Promise((resolve, reject) => {resolve(null); reject(null);});
 }
 
 type RoomPost = Omit<Room, "id">

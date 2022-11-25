@@ -263,6 +263,8 @@ describe("GET /hotels/:hotelId", () => {
       await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
       const hotel = await createHotels(1) as Hotel;
       await createRooms(hotel.id, 1, 1) as Room;
+      const room = await createRooms(hotel.id, 0, 1);
+      console.log(room);
 
       const response = await server.get(`/hotels/${faker.lorem.word()}`).set("Authorization", `Bearer ${token}`);
 
