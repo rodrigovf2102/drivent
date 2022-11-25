@@ -2,7 +2,7 @@ import faker from "@faker-js/faker";
 import { Hotel } from "@prisma/client";
 import { prisma } from "@/config";
 
-export async function createHotels(hotelsQuantity: number) {
+export async function createHotels(hotelsQuantity: number): Promise<Hotel | Hotel[] | unknown> {
   const hotels: HotelPost[] = [];
   for (let i = 0; i < hotelsQuantity; i++) {
     const hotel: HotelPost = {
@@ -23,7 +23,9 @@ export async function createHotels(hotelsQuantity: number) {
       data: hotels[0]
     });
   }
-  return {};
+  return prisma.hotel.findFirst({
+    where: { id: Number(faker.random.numeric(12)) }
+  });
 }
 
 type HotelPost = Omit<Hotel, "id">

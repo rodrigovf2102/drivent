@@ -1,4 +1,4 @@
-import { invalidDataError, notFoundError, paymentError } from "@/errors";
+import { invalidDataError, notFoundError, paymentError, unprocessableEntityError } from "@/errors";
 import hotelRepository from "@/repositories/hotel-repository";
 import { Enrollment, Hotel, Room, Ticket, TicketStatus } from "@prisma/client";
 import roomRepository from "@/repositories/room-repository";
@@ -14,7 +14,7 @@ async function getHotels(userId: number): Promise<Hotel[]> {
 async function getHotelRoomsByHotelIdWithNoBookings(hotelId: number, userId: number): Promise<Room[]> {
   await checkCredentialsByUserId(userId);
   if (isNaN(hotelId)) {
-    throw invalidDataError(["hotelId is not a number"]);
+    throw unprocessableEntityError();
   }
   const hotel = await hotelRepository.findHotelById(hotelId);
   

@@ -29,6 +29,9 @@ export async function getHotelRoomsByHotelIdWithNoBookings(req: AuthenticatedReq
     if(error.name==="PaymentError") {
       return res.sendStatus(httpStatus.PAYMENT_REQUIRED);
     }
+    if(error.name==="UnprocessableEntityError") {
+      return res.sendStatus(httpStatus.UNPROCESSABLE_ENTITY);
+    }
     if(error.name==="InvalidDataError") {
       return res.sendStatus(httpStatus.BAD_REQUEST);
     }

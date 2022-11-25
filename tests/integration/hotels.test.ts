@@ -266,7 +266,7 @@ describe("GET /hotels/:hotelId", () => {
 
       const response = await server.get(`/hotels/${faker.lorem.word()}`).set("Authorization", `Bearer ${token}`);
 
-      expect(response.status).toBe(httpStatus.BAD_REQUEST);
+      expect(response.status).toBe(httpStatus.UNPROCESSABLE_ENTITY);
     });
 
     it("should respond with status 400 when hotel of hotelId doesn't exist on database", async () => {
