@@ -56,7 +56,7 @@ async function checkCredentialsByUserId(userId: number) {
 }
 
 const hotelServices = {
-  getHotels, getHotelRoomsByHotelIdWithNoBookings
+  getHotels, getHotelRoomsByHotelIdWithNoBookings, checkCredentialsByUserId
 };
 
 export default hotelServices;
