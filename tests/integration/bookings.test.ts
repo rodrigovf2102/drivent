@@ -2,7 +2,6 @@ import app, { init } from "@/app";
 import faker from "@faker-js/faker";
 import { Hotel, Room, TicketStatus } from "@prisma/client";
 import httpStatus from "http-status";
-import { number } from "joi";
 import * as jwt from "jsonwebtoken";
 import supertest from "supertest";
 import { createUser, createHotels, createEnrollmentWithAddress, createTicket, createTicketTypeWithHotel, createTicketTypeWithNoHotel } from "../factories";
@@ -247,7 +246,7 @@ describe("POST /booking", () => {
       const ticketType = await createTicketTypeWithHotel();
       await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
       const hotel = await createHotels(1) as Hotel;
-      const room = await createRooms(hotel.id, 1, 1) as Room;
+      await createRooms(hotel.id, 1, 1) as Room;
 
       const body = { roomId: faker.random.word() };
 
@@ -387,7 +386,7 @@ describe("POST /booking", () => {
         const ticketType = await createTicketTypeWithHotel();
         await createTicket(enrollment.id, ticketType.id, TicketStatus.PAID);
         const hotel = await createHotels(1) as Hotel;
-        const room = await createRooms(hotel.id, 1, 1) as Room;
+        await createRooms(hotel.id, 1, 1) as Room;
         const newRoom = await createRooms(hotel.id, 1, 1) as Room;
 
         const body = { roomId: newRoom.id };

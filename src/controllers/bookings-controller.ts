@@ -1,4 +1,4 @@
-import { invalidDataError, notFoundError } from "@/errors";
+import { invalidDataError } from "@/errors";
 import { AuthenticatedRequest } from "@/middlewares";
 import bookingServices from "@/services/bookings-service";
 import { Response } from "express";
