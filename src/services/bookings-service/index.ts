@@ -33,9 +33,6 @@ async function updateBooking(userId: number, roomId: number, bookingId: number):
   }
   await checkRoom(roomId);
   const updateBooking = await bookingRepository.updateBooking(roomId, bookingId);
-  if(!updateBooking) {
-    throw invalidDataError(["booking with user id and roomId not found"]);
-  }
   return updateBooking;
 }
 

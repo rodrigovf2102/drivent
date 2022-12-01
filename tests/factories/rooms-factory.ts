@@ -8,7 +8,7 @@ export async function createRooms(hotelId: number, floorsAmount: number, roomsPe
   for (let i = 0; i < floorsAmount*roomsPerFloor; i++) {
     const room: RoomPost = {
       name: roomsNames[i],
-      capacity: Number(faker.random.numeric()),
+      capacity: Number(faker.random.numeric(1, { bannedDigits: ["0", "4", "5", "6", "7", "8", "9"] })),
       hotelId: hotelId,
       createdAt: faker.date.between("2018-01-01", "2020-10-10"),
       updatedAt: faker.date.between("2020-10-10", "2022-10-10")
@@ -50,4 +50,10 @@ function setRoomsNames(floorsAmount: number, roomsPerFloor: number): Array<strin
     }
   }
   return roomsNames;
+}
+
+export async function createRoomWithCapacity(hotelId: number, capacity: number) {
+  return prisma.room.create({
+    data: { name: "101", hotelId, capacity }
+  });
 }

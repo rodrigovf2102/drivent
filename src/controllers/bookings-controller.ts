@@ -1,4 +1,4 @@
-import { invalidDataError } from "@/errors";
+import { invalidDataError, notFoundError } from "@/errors";
 import { AuthenticatedRequest } from "@/middlewares";
 import bookingServices from "@/services/bookings-service";
 import { Response } from "express";
@@ -24,10 +24,13 @@ export async function getBooking(req: AuthenticatedRequest, res: Response) {
 
 export async function postBooking(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
-  const { roomId } = req.body;
+  const roomId = Number(req.body.roomId);
   try {
+    if (roomId < 1) {
+      throw invalidDataError(["roomId mustb be greater than 0"]);
+    }
     const booking = await bookingServices.postBooking(userId, roomId);
-    return res.status(httpStatus.OK).send(booking.id);
+    return res.status(httpStatus.OK).send({ bookingId: booking.id });
   } catch (error) {
     if (error.name === "InvalidDataError") {
       return res.sendStatus(httpStatus.FORBIDDEN);
@@ -43,14 +46,17 @@ export async function postBooking(req: AuthenticatedRequest, res: Response) {
 
 export async function updateBooking(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
-  const { roomId } = req.body;
+  const roomId = Number(req.body.roomId);
   const bookingId = Number(req.params.bookingId);
-  if (isNaN(bookingId)) {
-    throw invalidDataError(["bookingId must be a number"]);
-  }
   try {
+    if (isNaN(bookingId)) {
+      throw invalidDataError(["bookingId must be a number"]);
+    }
+    if (roomId < 1) {
+      throw invalidDataError(["roomId mustb be greater than 0"]);
+    }
     const booking = await bookingServices.updateBooking(userId, roomId, bookingId);
-    return res.status(httpStatus.OK).send(booking.id);
+    return res.status(httpStatus.OK).send({ bookingId: booking.id });
   } catch (error) {
     if (error.name === "InvalidDataError") {
       return res.sendStatus(httpStatus.FORBIDDEN);

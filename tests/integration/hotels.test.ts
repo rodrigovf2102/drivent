@@ -178,7 +178,7 @@ describe("GET /hotels", () => {
 
 describe("GET /hotels/:hotelId", () => {
   it("should respond with status 401 if no token is given", async () => {
-    const response = await server.get("/hotels/process/1");
+    const response = await server.get("/hotels/1");
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
 

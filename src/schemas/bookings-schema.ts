@@ -2,7 +2,7 @@ import Joi from "joi";
 import { Booking } from "@prisma/client";
 
 export const createBookingSchema = Joi.object<PostBook>({
-  id: Joi.number().required()
+  roomId: Joi.number().required()
 });
 
-type PostBook = Pick<Booking, "id">
+type PostBook = Pick<Booking, "roomId">
